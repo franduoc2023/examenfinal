@@ -8,6 +8,7 @@ import { PaneladministracionComponent } from './paneladministracion/paneladminis
 import { ServicioComponent } from './servicio/servicio.component';
 import { ContactoComponent } from './contacto/contacto.component';
 import { authGuard } from './auth.guard';
+import { TrabajadoresComponent } from './trabajadores/trabajadores.component';
 
 export const routes: Routes = [ 
   { path: 'login', component: LoginComponent },
@@ -15,7 +16,7 @@ export const routes: Routes = [
   { path: 'registro', component: RegistroComponent },
   {path: 'servicio', component:ServicioComponent},
   { path: 'contacto', component: ContactoComponent },
-
+  { path: 'trabajadores', component: TrabajadoresComponent },
   { path: 'panel', component: PanelComponent, canActivate: [authGuard] },
   { path: 'testpage', component: TestpageComponent },
   { path: 'paneladministracion', component: PaneladministracionComponent },

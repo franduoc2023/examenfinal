@@ -1,0 +1,73 @@
+<section class="vh-100 gradient-custom">
+  <div class="container py-5 h-100">
+    <!-- Campo de búsqueda -->
+
+    <br>
+    <div class="mb-4">
+      <h4>Agregar a obra</h4>
+      <form (ngSubmit)="nuevoTrabajadorCrear()">
+        <div class="form-group">
+          <input type="number" class="form-control mb-2" placeholder="ID" [(ngModel)]="nuevoTrabajador.id" name="id" required />
+          <input type="text" class="form-control mb-2" placeholder="Nombre" [(ngModel)]="nuevoTrabajador.nombre" name="nombre" required />
+          <input type="number" class="form-control mb-2" placeholder="Edad" [(ngModel)]="nuevoTrabajador.edad" name="edad" required />
+          <input type="text" class="form-control mb-2" placeholder="Puesto" [(ngModel)]="nuevoTrabajador.puesto" name="puesto" required />
+          <input type="text" class="form-control mb-2" placeholder="Obra" [(ngModel)]="nuevoTrabajador.obra" name="obra" required />
+          <br> 
+        
+        </div>
+         <div class="button-container"> 
+          <button type="submit" class="btn btn-primary btn-agregar">Agregar Trabajador a obra</button>
+
+          <button type="submit" class="btn btn-danger  btn-eliminar " 
+          (click)="eliminarTodo()">Eliminar Todo trabajador</button>
+        </div>
+      </form>
+    </div>
+     <br>
+     <br>
+     <br>
+    <div *ngIf="trabajadores && trabajadores.length > 0; else noData">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Edad</th>
+            <th>Puesto</th>
+            <th>Obra</th>
+            <th>Accion</th>
+           </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let trabajador of trabajadores">
+            <td>{{ trabajador.id }}</td>
+            <td>{{ trabajador.nombre }}</td>
+            <td>{{ trabajador.edad }}</td>
+            <td>{{ trabajador.puesto }}</td>
+            <td>{{ trabajador.obra }}</td>
+            <td>
+              <button 
+                class="btn btn-danger btn-sm" 
+                (click)="eliminarTrabajador(trabajador.id)">
+                Eliminar
+              </button>
+              
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #noData>
+      <div class="alert alert-warning text-center">
+        <strong>No hay datos disponibles.</strong>
+      </div>
+    </ng-template>
+  </div>
+
+
+   
+
+
+</section>
+
