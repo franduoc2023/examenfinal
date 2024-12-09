@@ -20,7 +20,7 @@ export class JsonService {
     return this.http.get(this.jsonUrl);
   }
   
-  updateJsonData(listaTrabajadores: any): Observable<any> {
+  actualizaTrabajadorOelimina(listaTrabajadores: any): Observable<any> {
     return this.http.put(this.jsonUrl, listaTrabajadores, {
       headers: { 'Content-Type': 'application/json' }
     });
@@ -33,7 +33,14 @@ export class JsonService {
     return this.http.delete(this.jsonUrl, {
       headers: { 'Content-Type': 'application/json' }
     });}
+
+
+  /*  noAplicaSeusaElOtro(listaTrabajadores: any): Observable<any> {
+      return this.http.post(this.jsonUrl, listaTrabajadores, {
+        headers: { 'Content-Type': 'application/json' }
+      });
+
   }
-
-
+*/
+}
   
