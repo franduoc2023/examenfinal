@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { FooterComponent } from '../../footer/footer.component';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+
 /**
  * @description
  * Este componente `LoginComponent` gestiona el formulario de inicio de sesión.
@@ -19,8 +21,9 @@ import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } 
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  mensajeError: string = '';
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {
     this.loginForm = this.fb.group({
       emailAddress: ['', [Validators.required, Validators.email]],
       password: ['',  ]
@@ -47,24 +50,32 @@ export class LoginComponent {
  * 2. El objeto `userData` debe tener `emailAddress` y `password`.
  * 3. falta terminar.
  */
-  onLogin() {
-    if (this.loginForm.valid) {
-      const { emailAddress, password } = this.loginForm.value;  
-      const datoUsuario = localStorage.getItem('userData');
-  
-      if (datoUsuario) {
-        const { emailAddress: storedEmail, password: storedPassword } = JSON.parse(datoUsuario);
-  
-         if (emailAddress === storedEmail && password === storedPassword) {
-          alert('Login Completo');
+async onLogin() {
+  if (this.loginForm.valid) {
+    const { emailAddress: correoElectronico, password: contrasena } = this.loginForm.value;
 
-          this.router.navigate(['/home']);  
-          console.log('Datos almacenados en localStorage:', localStorage.getItem('userData'));
-        } else {
-          alert('Error contraseña');
-          console.log('datos a revisar localstore con contraseña ', localStorage.getItem('userData'));
+    try {
+       await this.authService.login(correoElectronico, contrasena);
 
-        }}}}}
+       const usuarioActual = this.authService.auth.currentUser;
 
+      if (usuarioActual) {
+         const datosUsuario = {
+          correo: usuarioActual.email,
+          id: usuarioActual.uid,
+          isLoggedIn: true, 
+        };
 
-  
+        localStorage.setItem('datosUsuario', JSON.stringify(datosUsuario));
+        console.log('Datos guardados en localStorage:', datosUsuario);
+      }
+
+       this.router.navigate(['/home']);
+    } catch (error: any) {
+      console.error('Error al iniciar sesión:', error);
+      this.mensajeError = 'error de datos';
+    }
+  } else {
+    console.log('Formulario inválido:', this.loginForm.value);
+  }
+}}

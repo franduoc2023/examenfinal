@@ -55,10 +55,9 @@ export class PaneladministracionComponent {
       const updatedUserData = this.registroForm.value;
 
        localStorage.setItem('userData', JSON.stringify(updatedUserData));
-      alert('Datos actualizados correctamente.');
-      console.log('Usuario actualizado:', updatedUserData);
+       console.log('Usuario actualizado:', updatedUserData);
     } else {
-      alert('Formulario inválido. Por favor, revisa los campos.');
+      console.log('falta aviso');
     }
   }
 
@@ -67,8 +66,7 @@ export class PaneladministracionComponent {
     if (confirmDelete) {
       localStorage.removeItem('userData');  
       this.registroForm.reset();  
-      alert('Usuario eliminado correctamente.');
-      console.log('Usuario eliminado.');
+       console.log('Usuario eliminado.');
     }
   }
   }
